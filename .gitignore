@@ -1,0 +1,8 @@
+.build/
+releases/
+Verification/
+Vendor/bin/
+Vendor/src/
+Vendor/builds/
+Vendor/vroom/
+.DS_Store
