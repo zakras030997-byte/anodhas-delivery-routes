@@ -2,7 +2,7 @@ import SwiftUI
 import AppKit
 
 enum FreightSection: String, CaseIterable {
-    case orders = "Заказы", vehicles = "Машины", routes = "Маршруты", costs = "Расходы", connection = "Подключение"
+    case orders = "Заказы", vehicles = "Машины", yandex = "Яндекс.Карты", routes = "Маршруты", costs = "Расходы", connection = "Подключение"
 }
 
 enum FreightFormat {
@@ -28,7 +28,7 @@ enum FreightFormat {
 
 struct FreightContentView: View {
     @StateObject private var store = RouteStore()
-    @State private var section: FreightSection = .orders
+    @State private var section: FreightSection = .yandex
     @State private var deletePlan = false
 
     var body: some View {
@@ -55,7 +55,7 @@ struct FreightContentView: View {
             HStack {
                 Text(store.saved.isEmpty ? "Данные хранятся на этом Mac" : store.saved)
                 Spacer()
-                Text("ANODHAS AI · 1.0.0")
+                Text("ANODHAS AI · 1.1.0")
             }.font(.caption).foregroundStyle(.secondary).padding(.horizontal, 16).padding(.vertical, 8)
         }
         .frame(minWidth: 1100, minHeight: 750)
@@ -74,7 +74,7 @@ struct FreightContentView: View {
                 Text("Городская развозка и междугородние рейсы").font(.caption).foregroundStyle(.secondary)
             }
             Spacer()
-            Button("Новый план") { store.createPlan(); section = .orders }
+            Button("Новый план") { store.createPlan(); section = .yandex }
                 .buttonStyle(.borderedProminent).disabled(store.busy)
             Button("Открыть план…") { store.openPlan() }.disabled(store.busy)
             if store.busy {
@@ -124,11 +124,12 @@ struct FreightContentView: View {
                 Picker("Раздел", selection: $section) {
                     ForEach(FreightSection.allCases, id: \.self) { Text($0.rawValue).tag($0) }
                 }.pickerStyle(.segmented)
-                stateLabel(plan)
+                if section != .yandex {stateLabel(plan)}
             }
             switch section {
             case .orders: OrdersPane(store: store)
             case .vehicles: VehiclesPane(store: store)
+            case .yandex: YandexMapsPane(store:store,planID:plan.id)
             case .routes: RoutesPane(store: store)
             case .costs: CostsPane(store: store)
             case .connection: ConnectionPane(store: store)

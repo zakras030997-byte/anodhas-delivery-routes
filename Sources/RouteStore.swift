@@ -70,7 +70,7 @@ enum WorkspaceDisk {
     func addOrder() {guard (current?.operationCount ?? 0)<50 else{error="В одном плане не более 50 операций.";return};updatePlan{var o=DeliveryOrder();o.number=String($0.orders.count+1);$0.orders.append(o)}}
     func removeVehicle(_ id:UUID) {updatePlan{$0.vehicles.removeAll{$0.id==id};$0.manualOrder=[]}}
     func removeOrder(_ id:UUID) {updatePlan{$0.orders.removeAll{$0.id==id};$0.manualOrder=[]}}
-    func deleteCurrent() {guard !busy,let id=data.selected else{return};var d=data;d.plans.removeAll{$0.id==id};d.selected=d.plans.first?.id;commit(d)}
+    func deleteCurrent() {guard !busy,let id=data.selected else{return};var d=data;d.plans.removeAll{$0.id==id};d.selected=d.plans.first?.id;commit(d);if !data.plans.contains(where:{$0.id==id}){UserDefaults.standard.removeObject(forKey:"yandex.points."+id.uuidString)}}
     func updateSettings(_ edit:(inout ProviderSettings)->Void) {
         guard !busy else{return};var d=data;let old=d.settings;edit(&d.settings)
         if old.endpoint != d.settings.endpoint || old.avoidTolls != d.settings.avoidTolls || old.avoidUnpaved != d.settings.avoidUnpaved {

@@ -15,4 +15,6 @@ xcrun swiftc "${COMMON[@]}" -DTRANSFER_TEST_STUB Sources/Model.swift Sources/Cor
 .build/TransferTests > Verification/transfer-run.log
 xcrun swiftc "${COMMON[@]}" Sources/Model.swift Sources/Core.swift Sources/Roads.swift Tests/RoadTests.swift -o .build/RoadTests
 .build/RoadTests > Verification/road-tests.json
+xcrun swiftc "${COMMON[@]}" Sources/Model.swift Sources/YandexRoute.swift Tests/YandexRouteTests.swift -o .build/YandexRouteTests
+.build/YandexRouteTests > Verification/yandex-route-tests.json
 echo 'All local checks passed. Public network and installed UI require separate checks.'

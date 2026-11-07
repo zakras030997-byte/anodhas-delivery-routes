@@ -4,7 +4,7 @@ PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$PROJECT_ROOT"
 SDK_PATH="${FREIGHT_SDK:-/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk}"
 BUILD_DIR="$PROJECT_ROOT/.build"
-RELEASE_DIR="$PROJECT_ROOT/releases/1.0.0"
+RELEASE_DIR="$PROJECT_ROOT/releases/1.1.0"
 APP="$RELEASE_DIR/Маршруты доставки.app"
 mkdir -p "$BUILD_DIR/module-cache" "$RELEASE_DIR" Verification
 if [ ! -x Vendor/bin/vroom ]; then bash Scripts/build-solver.sh; fi
